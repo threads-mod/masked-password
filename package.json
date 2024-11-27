@@ -1,0 +1,47 @@
+{
+  "name": "@krozamdev/masked-password",
+  "version": "0.0.1",
+  "description": "A lightweight and modern utility to mask input fields with password-like characters. This library is specifically designed to prevent password managers from automatically saving values, making it ideal for sensitive data handling. It also provides a method to retrieve the original value of the input. Fully compatible with JavaScript and TypeScript.",
+  "keywords": [
+    "input masking",
+    "password masking",
+    "prevent password manager",
+    "ignore password manager",
+    "input field utility",
+    "form utilities",
+    "typescript",
+    "javascript",
+    "masked input",
+    "original value retrieval",
+    "frontend tools",
+    "lightweight"
+  ],
+  "main": "dist/index.js",
+  "author": "krozamdev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krozamdev/masked-password.git"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bugs": {
+    "url": "https://github.com/krozamdev/masked-password/issues"
+  },
+  "homepage": "https://github.com/krozamdev/masked-password#readme",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "terser": "^5.36.0",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "minify": "terser dist/index.js --compress --mangle --output dist/index.js"
+  }
+}
