@@ -48,7 +48,7 @@ A lightweight and modern utility to mask input fields with password-like charact
 
 ### Basic Example ESModule
 
-By default, the masking character is *, and the original value can be retrieved using the provided method.
+By default, the masking character is •, and the original value can be retrieved using the provided method.
 
 ```ts
 import { applyMaskedInput } from '@krozamdev/masked-password';
@@ -67,7 +67,7 @@ You can also provide a custom mask character, such as `•`, by passing it as a 
 import { applyMaskedInput } from '@krozamdev/masked-password';
 
 const inputElement = document.getElementById("passwordInput") as HTMLInputElement;
-const maskedInput = applyMaskedInput(inputElement, { character: "•" });
+const maskedInput = applyMaskedInput(inputElement);
 
 console.log(maskedInput.getOriginalValue()); // Original value of input
 ```
@@ -80,7 +80,7 @@ console.log(maskedInput.getOriginalValue()); // Original value of input
   import { applyMaskedInput } from '@krozamdev/masked-password';
 
   const inputElement = document.getElementById('passwordInput');
-  const maskedInput = applyMaskedInput(inputElement, { character: '•' });
+  const maskedInput = applyMaskedInput(inputElement, { character: '*' });
 
   // To get the original value
   console.log(maskedInput.getOriginalValue());
@@ -93,7 +93,7 @@ console.log(maskedInput.getOriginalValue()); // Original value of input
 
 In CommonJS, you can use require to import the module.
 
-### Default Mask (`*`):
+### Default Mask (`•`):
 
 ```js
 const { applyMaskedInput } = require('@krozamdev/masked-password');
@@ -104,13 +104,13 @@ const maskedInput = applyMaskedInput(inputElement);
 console.log(maskedInput.getOriginalValue()); // Original value of input
 ```
 
-### Custom Mask (`•`):
+### Custom Mask (`*`):
 
 ```js
 const { applyMaskedInput } = require('@krozamdev/masked-password');
 
 const inputElement = document.getElementById('passwordInput');
-const maskedInput = applyMaskedInput(inputElement, { character: '•' });
+const maskedInput = applyMaskedInput(inputElement, { character: '*' });
 
 console.log(maskedInput.getOriginalValue()); // Original value of input
 ```
@@ -123,7 +123,7 @@ console.log(maskedInput.getOriginalValue()); // Original value of input
   const { applyMaskedInput } = require('@krozamdev/masked-password');
 
   const inputElement = document.getElementById('passwordInput');
-  const maskedInput = applyMaskedInput(inputElement, { character: '•' });
+  const maskedInput = applyMaskedInput(inputElement, { character: '*' });
 
   // To get the original value
   console.log(maskedInput.getOriginalValue());
@@ -139,7 +139,7 @@ console.log(maskedInput.getOriginalValue()); // Original value of input
   const { applyMaskedInput } = require('@krozamdev/masked-password');
 
   const inputElement = document.getElementById('passwordInput');
-  const maskedInput = applyMaskedInput(inputElement, { character: '•' });
+  const maskedInput = applyMaskedInput(inputElement, { character: '*' });
 
   let show = false;
   const eyeBtn = document.getElementById("eye_btn");
@@ -191,10 +191,37 @@ you should NOT use this in production
 
 ### Methods
 
-* `getOriginalValue()`: Returns the original unmasked value of the input.
-* `destroy()`: Introduced a method to remove registered event listeners from the input element, restore the original value, and deactivate masking.
-* `addEvent()` : Introduced a method to re-register event listeners on the input element, making it easier to re-enable masking after being destroyed. 
+1. `getOriginalValue()`:
+    - This function returns the original unmasked value of the input field. For example, if the input has a masking format (like a phone number with parentheses and dashes), this function will return the raw, unformatted value without any masking.
+2. `destroy()`:
+    - This function removes the registered event listeners from the input element, restores the original value, and disables the masking feature.
+    - The `destroy()` method checks certain conditions (like whether the `onChange` configuration exists), allowing the logic of the event handling to be adjusted or replaced before fully destroying the masking.
+3. `addEvent()`:
+    - This function re-registers the event listeners on the input element, making it easier to re-enable the masking after it has been destroyed. This method is useful if you temporarily disable masking and later want to re-enable it without losing the initial setup or logic.
+4. `purgeDestroy()`:
+    - This function is similar to `destroy()`, but it removes all registered event listeners from the input element without checking any conditions. It restores the original value and disables masking completely.
+    - The key difference is that `purgeDestroy()` aggressively removes event listeners and masking without considering additional configurations or conditions.
 
-### License
+#### Key Differences:
 
-**MIT**
+- `destroy()` takes into account specific conditions (such as the existence of the `onChange` configuration), allowing more control over the event handling before removing the masking.
+- `purgeDestroy()` is more direct and forceful in that it removes all event listeners and deactivates masking without checking any conditions.
+
+#### When to Use:
+
+- Use `destroy()` if you need finer control or need to consider additional configurations (e.g., `onChange`) before disabling the masking.
+- Use `purgeDestroy()` if you want to completely reset the input element without considering any conditions or logic.
+
+#### Example Use Cases:
+
+- `destroy()`: Used when you want to stop masking but still retain logic related to value changes (`onChange`).
+- `purgeDestroy()`: Used when you want to fully reset the input element and remove masking without regard to existing logic or configurations.
+
+
+### Sample Code
+
+[sample code](https://github.com/krozamdev/masked-password/tree/main/samples)
+
+---
+
+### License <a href="https://www.npmjs.com/package/@krozamdev/masked-password"><img src="https://img.shields.io/npm/l/@krozamdev/masked-password" alt="License"></a>
